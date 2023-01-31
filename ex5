@@ -1,0 +1,327 @@
+mysql> create database BPC;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use bpc;
+Database changed
+mysql> create table bpc(title varchar(20),author varchar(15),subject varchar(20),price int(25));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc bpc;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| title   | varchar(20) | YES  |     | NULL    |       |
+| author  | varchar(15) | YES  |     | NULL    |       |
+| subject | varchar(20) | YES  |     | NULL    |       |
+| price   | int(25)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> alter table bpc
+    -> ADD quality ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> alter table bpc ADD quality varchar(5);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from bpc;
+Empty set (0.00 sec)
+
+mysql> desc bpc;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| title   | varchar(20) | YES  |     | NULL    |       |
+| author  | varchar(15) | YES  |     | NULL    |       |
+| subject | varchar(20) | YES  |     | NULL    |       |
+| price   | int(25)     | YES  |     | NULL    |       |
+| quality | varchar(5)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.05 sec)
+
+mysql> alter table bpc
+    -> drop table quality;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table quality' at line 2
+mysql> alter table bpc DROP quality varchar(5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(5)' at line 1
+mysql> alter table bpc DROP column quality varchar(5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(5)' at line 1
+mysql> alter table bpc DROP column quality;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc bpc;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| title   | varchar(20) | YES  |     | NULL    |       |
+| author  | varchar(15) | YES  |     | NULL    |       |
+| subject | varchar(20) | YES  |     | NULL    |       |
+| price   | int(25)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table bpc
+    -> ADD primary key (title);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc bpc;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| title   | varchar(20) | NO   | PRI |         |       |
+| author  | varchar(15) | YES  |     | NULL    |       |
+| subject | varchar(20) | YES  |     | NULL    |       |
+| price   | int(25)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> create database buyer;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use buyer;
+Database changed
+mysql> create table buyer(name varchar(15),address varchar(20),subject varchar(20));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc buyer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(15) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
+| subject | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+mysql> use bpc;
+Database changed
+mysql> desc bpc;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| title   | varchar(20) | NO   | PRI |         |       |
+| author  | varchar(15) | YES  |     | NULL    |       |
+| subject | varchar(20) | YES  |     | NULL    |       |
+| price   | int(25)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> use buyer;
+Database changed
+mysql> use bpc;
+Database changed
+mysql> create table bpc(title varchar(20),name varchar(10),feedback varchar(20));
+ERROR 1050 (42S01): Table 'bpc' already exists
+mysql> create table buyer(title varchar(20),name varchar(10),feedback varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc buyer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| title    | varchar(20) | YES  |     | NULL    |       |
+| name     | varchar(10) | YES  |     | NULL    |       |
+| feedback | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> alter table buyer
+    -> ADD foreign key(title) references bpc(title);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from buyer;
+Empty set (0.00 sec)
+
+mysql> desc buyer;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| title    | varchar(20) | YES  | MUL | NULL    |       |
+| name     | varchar(10) | YES  |     | NULL    |       |
+| feedback | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into bpc values('data structure','santhosh','csc','6000');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into bpc values('algebra','saks','maths','5000');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into bpc values('semiconductor','keer','4000');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into bpc values('semiconductor','keer','physics','4000');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into bpc values('conductor','vijay','chemistry','10');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * frombpc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'frombpc' at line 1
+mysql> select * from bpc;
++----------------+----------+-----------+-------+
+| title          | author   | subject   | price |
++----------------+----------+-----------+-------+
+| algebra        | saks     | maths     |  5000 |
+| conductor      | vijay    | chemistry |    10 |
+| data structure | santhosh | csc       |  6000 |
+| semiconductor  | keer     | physics   |  4000 |
++----------------+----------+-----------+-------+
+4 rows in set (0.00 sec)
+mysql> select * from buyer;
++----------------+-------+----------+
+| title          | name  | feedback |
++----------------+-------+----------+
+| conductor      | sid   | easy     |
+| data structure | tamil | hard     |
+| semiconductor  | saro  | hard     |
++----------------+-------+----------+
+3 rows in set (0.00 sec)
+
+mysql> update buyer set name='saks where title semiconductor;
+    '> update buyer set name='saks where title=semiconductor;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'saks where title=semiconductor' at line 1
+mysql> update buyer set name='saks' where title=semiconductor;
+ERROR 1054 (42S22): Unknown column 'semiconductor' in 'where clause'
+mysql> update buyer set name='saks' where title='semiconductor';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from buyer;
++----------------+-------+----------+
+| title          | name  | feedback |
++----------------+-------+----------+
+| conductor      | sid   | easy     |
+| data structure | tamil | hard     |
+| semiconductor  | saks  | hard     |
++----------------+-------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from bpc;
++----------------+----------+-----------+-------+
+| title          | author   | subject   | price |
++----------------+----------+-----------+-------+
+| algebra        | saks     | maths     |  5000 |
+| conductor      | vijay    | chemistry |    10 |
+| data structure | santhosh | csc       |  6000 |
+| semiconductor  | keer     | physics   |  4000 |
++----------------+----------+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into bpc values('databases','liz','csc','900');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from bpc;
++----------------+----------+-----------+-------+
+| title          | author   | subject   | price |
++----------------+----------+-----------+-------+
+| algebra        | saks     | maths     |  5000 |
+| conductor      | vijay    | chemistry |    10 |
+| data structure | santhosh | csc       |  6000 |
+| databases      | liz      | csc       |   900 |
+| semiconductor  | keer     | physics   |  4000 |
++----------------+----------+-----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> delete from bpc where title=databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databases' at line 1
+mysql> delete from bpc where title='databases';
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from bpc;
++----------------+----------+-----------+-------+
+| title          | author   | subject   | price |
++----------------+----------+-----------+-------+
+| algebra        | saks     | maths     |  5000 |
+| conductor      | vijay    | chemistry |    10 |
+| data structure | santhosh | csc       |  6000 |
+| semiconductor  | keer     | physics   |  4000 |
++----------------+----------+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select
+    -> * from bpc where name like 'sa%';
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> * from bpc where author like 'sa%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from bpc where author like 'sa%'' at line 1
+mysql> * from bpc where author like 'sa%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from bpc where author like 'sa%'' at line 1
+mysql> select * from bpc where author like 'sa%';
++----------------+----------+---------+-------+
+| title          | author   | subject | price |
++----------------+----------+---------+-------+
+| algebra        | saks     | maths   |  5000 |
+| data structure | santhosh | csc     |  6000 |
++----------------+----------+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from bpc where author like 'sa%'a and 'ke%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'a and 'ke%'' at line 1
+mysql> select * from bpc where author like 'sa%' and 'ke%';
+Empty set, 1 warning (0.05 sec)
+
+mysql>
+mysql> select * from bpc where author between like 'sa%' and 'ke%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like 'sa%' and 'ke%'' at line 1
+mysql> select * from bpc where author between 'sa%' and 'ke%';
+Empty set (0.00 sec)
+
+mysql> select * from bpc where author between 'sa%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from bpc where author like 'ke%';
++---------------+--------+---------+-------+
+| title         | author | subject | price |
++---------------+--------+---------+-------+
+| semiconductor | keer   | physics |  4000 |
++---------------+--------+---------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from bpc where author not like 'ke%';
++----------------+----------+-----------+-------+
+| title          | author   | subject   | price |
++----------------+----------+-----------+-------+
+| algebra        | saks     | maths     |  5000 |
+| conductor      | vijay    | chemistry |    10 |
+| data structure | santhosh | csc       |  6000 |
++----------------+----------+-----------+-------+
+3 rows in set (0.03 sec)
+
+mysql> select * from bpc where subject between chemistry and physics;
+ERROR 1054 (42S22): Unknown column 'chemistry' in 'where clause'
+mysql> select * from bpc where subject between 'chemistry' and 'physics';
++----------------+----------+-----------+-------+
+| title          | author   | subject   | price |
++----------------+----------+-----------+-------+
+| algebra        | saks     | maths     |  5000 |
+| conductor      | vijay    | chemistry |    10 |
+| data structure | santhosh | csc       |  6000 |
+| semiconductor  | keer     | physics   |  4000 |
++----------------+----------+-----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from bpc where author between vijay and keer;
+ERROR 1054 (42S22): Unknown column 'vijay' in 'where clause'
+mysql> select * from bpc where title between conductor and semiconductor;
+ERROR 1054 (42S22): Unknown column 'conductor' in 'where clause'
+mysql> select * from bpc where title between 'conductor' and 'semiconductor';
++----------------+----------+-----------+-------+
+| title          | author   | subject   | price |
++----------------+----------+-----------+-------+
+| conductor      | vijay    | chemistry |    10 |
+| data structure | santhosh | csc       |  6000 |
+| semiconductor  | keer     | physics   |  4000 |
++----------------+----------+-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select author from bpc where title='conductor'
+    -> ;
++--------+
+| author |
++--------+
+| vijay  |
++--------+
+1 row in set (0.00 sec)
+
+mysql>
