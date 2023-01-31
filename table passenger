@@ -1,0 +1,22 @@
+mysql> use test;
+Database changed
+mysql> create table passenger(
+    -> admno int not null primary key,
+    -> name char(20) not null,
+    -> gender char(1),
+    -> age int,
+    -> place char(10)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc passenger;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| admno  | int(11)  | NO   | PRI | NULL    |       |
+| name   | char(20) | NO   |     | NULL    |       |
+| gender | char(1)  | YES  |     | NULL    |       |
+| age    | int(11)  | YES  |     | NULL    |       |
+| place  | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
