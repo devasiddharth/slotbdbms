@@ -1,0 +1,51 @@
+mysql> create database dbms;
+ERROR 1007 (HY000): Can't create database 'dbms'; database exists
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| data               |
+| dbms               |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+6 rows in set (0.03 sec)
+
+mysql> use test;
+Database changed
+mysql> create table employee(
+    -> Name varchar(100),Age int(100),Salary int(100));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc employee;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| Name   | varchar(100) | YES  |     | NULL    |       |
+| Age    | int(100)     | YES  |     | NULL    |       |
+| Salary | int(100)     | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+mysql> insert into employee values('Monica',25,50000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee values('Tamil',28,50000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into employee values('Sidharth',29,50000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select*from employee;
++----------+------+--------+
+| Name     | Age  | Salary |
++----------+------+--------+
+| Monica   |   25 |  50000 |
+| Tamil    |   28 |  50000 |
+| Sidharth |   29 |  50000 |
++----------+------+--------+
+3 rows in set (0.00 sec)
+mysql> truncate employee;
+Query OK, 0 rows affected (0.02 sec)
