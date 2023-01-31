@@ -1,0 +1,263 @@
+mysql> create database hospitals;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use hospitals;
+Database changed
+mysql> create table hodpitals(Regno int(3),Name varchar(15),gender char(1),DOB date,Mobileno int(10),City varchar(15));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc hospitals;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Regno    | int(3)      | YES  |     | NULL    |       |
+| Name     | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
+| City     | varchar(15) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+mysql>
+mysql> desc hospitals;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Regno    | int(3)      | YES  |     |         |       |
+| Name     | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
+| City     | varchar(15) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> alter table hospitals ADD bloodgrp varchar(5);
+Query OK, 4 rows affected (0.09 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc hospitals;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Regno    | int(3)      | YES  |     | NULL    |       |
+| Name     | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
+| City     | varchar(15) | YES  |     | NULL    |       |
+| bloodgrp | varchar(5)  | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> alter table hospitals
+    -> drop column bloodgrp;
+Query OK, 4 rows affected (0.11 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> desc hospitals;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Regno    | int(3)      | YES  |     | NULL    |       |
+| Name     | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
+| City     | varchar(15) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+mysql> alter table hospitals
+    -> ADD primary key (Regno);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc hospitals;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Regno    | int(3)      | NO   | PRI | 0       |       |
+| Name     | varchar(15) | YES  |     | NULL    |       |
+| gender   | char(1)     | YES  |     | NULL    |       |
+| DOB      | date        | YES  |     | NULL    |       |
+| Mobileno | int(10)     | YES  |     | NULL    |       |
+| City     | varchar(15) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> desc patient;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Regno       | varchar(8)  | NO   | PRI |         |       |
+| patientname | varchar(10) | YES  |     | NULL    |       |
+| fees        | int(5)      | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> desc doctor;
++------------+------------+------+-----+---------+-------+
+| Field      | Type       | Null | Key | Default | Extra |
++------------+------------+------+-----+---------+-------+
+| patienfees | varchar(8) | YES  |     | NULL    |       |
+| fees       | int(8)     | YES  |     | NULL    |       |
+| age        | int(9)     | YES  |     | NULL    |       |
++------------+------------+------+-----+---------+-------+
+3 rows in set (0.07 sec)
+
+mysql> alter table doctor
+    -> ADD foreign key(fees) references patient(fees);
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc doctor;
++------------+------------+------+-----+---------+-------+
+| Field      | Type       | Null | Key | Default | Extra |
++------------+------------+------+-----+---------+-------+
+| patienfees | varchar(8) | YES  |     | NULL    |       |
+| fees       | int(8)     | YES  | MUL | NULL    |       |
+| age        | int(9)     | YES  |     | NULL    |       |
++------------+------------+------+-----+---------+-------+
+3 rows in set (0.07 sec)
+
+mysql> insert into hospitals values('1234','santhosh','2004-03-21','283929553');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>  insert into hospitals values('1234','santhosh','M','2004-03-21');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into hospitals values('1234','santhosh','M','2004-03-21','221133449','chennai');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into hospitals values('4384','keerthanaa','F','2005-05-29','883484835','ramapuram');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into hospitals values('8483','vijay','M','2004-08-10','984938939','manali');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into hospitals values('9494','saravanan','M','2005-01-01','939448930','moolakadai');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from hositals;
+ERROR 1146 (42S02): Table 'hospitals.hositals' doesn't exist
+mysql> select * from hospitals;
++-------+------------+--------+------------+-----------+------------+
+| Regno | Name       | gender | DOB        | Mobileno  | City       |
++-------+------------+--------+------------+-----------+------------+
+|  1234 | santhosh   | M      | 2004-03-21 | 221133449 | chennai    |
+|  4384 | keerthanaa | F      | 2005-05-29 | 883484835 | ramapuram  |
+|  8483 | vijay      | M      | 2004-08-10 | 984938939 | manali     |
+|  9494 | saravanan  | M      | 2005-01-01 | 939448930 | moolakadai |
++-------+------------+--------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from hospitals where Name=keerthanaa;
+ERROR 1054 (42S22): Unknown column 'keerthanaa' in 'where clause'
+mysql> select * from hospitals where Name='keerthanaa';
++-------+------------+--------+------------+-----------+-----------+
+| Regno | Name       | gender | DOB        | Mobileno  | City      |
++-------+------------+--------+------------+-----------+-----------+
+|  4384 | keerthanaa | F      | 2005-05-29 | 883484835 | ramapuram |
++-------+------------+--------+------------+-----------+-----------+
+1 row in set (0.03 sec)
+
+mysql> select * from hospitals where Regno between 4384 and 9494;
++-------+------------+--------+------------+-----------+------------+
+| Regno | Name       | gender | DOB        | Mobileno  | City       |
++-------+------------+--------+------------+-----------+------------+
+|  4384 | keerthanaa | F      | 2005-05-29 | 883484835 | ramapuram  |
+|  8483 | vijay      | M      | 2004-08-10 | 984938939 | manali     |
+|  9494 | saravanan  | M      | 2005-01-01 | 939448930 | moolakadai |
++-------+------------+--------+------------+-----------+------------+
+3 rows in set (0.05 sec)
+
+mysql> create table salary(name varchar(5),idproof varchar(15),salary int(10));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc salary;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(5)  | YES  |     | NULL    |       |
+| idproof | varchar(15) | YES  |     | NULL    |       |
+| salary  | int(10)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into salary values('santhosh','4433','10000000');
+ERROR 1406 (22001): Data too long for column 'name' at row 1
+mysql> insert into salary values('sid','4433','100000');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into salary values('saks','6565','10000');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into salary values('liz','7676','20030');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from salary;
++------+---------+--------+
+| name | idproof | salary |
++------+---------+--------+
+| sid  | 4433    | 100000 |
+| saks | 6565    |  10000 |
+| liz  | 7676    |  20030 |
++------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * avg(salary) from salary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'avg(salary) from salary' at line 1
+mysql>  select avg(salary) from salary;
++-------------+
+| avg(salary) |
++-------------+
+|  43343.3333 |
++-------------+
+1 row in set (0.05 sec)
+
+mysql> select max(salary) from salary;
++-------------+
+| max(salary) |
++-------------+
+|      100000 |
++-------------+
+1 row in set (0.05 sec)
+
+mysql> select min(salary) from salary;
++-------------+
+| min(salary) |
++-------------+
+|       10000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select suma(salary) from salary;
+ERROR 1305 (42000): FUNCTION hospitals.suma does not exist
+mysql> select sum(salary) from salary;
++-------------+
+| sum(salary) |
++-------------+
+|      130030 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from hospitals where name like '%sa';
+Empty set (0.05 sec)
+
+mysql> select * from hospitals where name like 'sa%';
++-------+-----------+--------+------------+-----------+------------+
+| Regno | Name      | gender | DOB        | Mobileno  | City       |
++-------+-----------+--------+------------+-----------+------------+
+|  1234 | santhosh  | M      | 2004-03-21 | 221133449 | chennai    |
+|  9494 | saravanan | M      | 2005-01-01 | 939448930 | moolakadai |
++-------+-----------+--------+------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from hospitals where city like '%ai';
++-------+-----------+--------+------------+-----------+------------+
+| Regno | Name      | gender | DOB        | Mobileno  | City       |
++-------+-----------+--------+------------+-----------+------------+
+|  1234 | santhosh  | M      | 2004-03-21 | 221133449 | chennai    |
+|  9494 | saravanan | M      | 2005-01-01 | 939448930 | moolakadai |
++-------+-----------+--------+------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql>
